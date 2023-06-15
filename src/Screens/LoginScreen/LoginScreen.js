@@ -11,7 +11,8 @@ import React, { useState } from "react";
 
 const LoginScreen = ({ changeScreen }) => {
     const [mail, setMail] = useState('');
-    const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('');
+  const [hidePassword, setHidePassword] = useState(true);
 
     const handleMail = text => {
         setMail(text)
@@ -29,56 +30,56 @@ const LoginScreen = ({ changeScreen }) => {
         console.log(`Email: ${mail}, Password: ${password}`);
     };
 
-    const showPassword = () => {
-        alert(`Your password is: ${password}`);
-    };
-
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            style={styles.containerKeyBoard}
-        >
-            <View style={styles.container}>
-                <Text style={styles.title}>Увійти</Text>
-                <TextInput
-                    style={styles.inputMail}
-                    placeholder="Адреса електронної пошти"
-                    inputMode="email"
-                    value={mail}
-                    onChangeText={handleMail}
-                />
-                <TextInput
-                    style={styles.inputPassword}
-                    placeholder="••••••••••••"
-                    secureTextEntry={true}
-                    value={password}
-                    onChangeText={handlePassword}
-                />
-                <TouchableOpacity
-                    style={styles.showPassword}
-                    activeOpacity={0.5}
-                    onPress={showPassword}
-                >
-                    <Text style={styles.showPasswordText}>Показати</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.loginButton}
-                    activeOpacity={0.5}
-                    onPress={login}
-                >
-                    <Text style={styles.loginButtonText}>Увійти</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={styles.loginLink}
-                    activeOpacity={0.5}
-                    onPress={() => changeScreen(1)}
-                >
-                    <Text style={styles.loginLinkText}>
-                        Немає акаунту? Зареєструватися
-                    </Text>
-                </TouchableOpacity>
-            </View>
-        </KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        style={styles.containerKeyBoard}
+      >
+        <View style={styles.container}>
+          <Text style={styles.title}>Увійти</Text>
+          <TextInput
+            style={styles.inputMail}
+            placeholder="Адреса електронної пошти"
+            inputMode="email"
+            value={mail}
+            onChangeText={handleMail}
+          />
+          <TextInput
+            style={styles.inputPassword}
+            placeholder="••••••••••••"
+            secureTextEntry={hidePassword}
+            value={password}
+            onChangeText={handlePassword}
+          />
+          <TouchableOpacity
+            style={styles.showPassword}
+            activeOpacity={0.5}
+            onPress={() => {
+              setHidePassword(!hidePassword);
+            }}
+          >
+            <Text style={styles.showPasswordText}>
+              {hidePassword ? "Показати" : "Приховати"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginButton}
+            activeOpacity={0.5}
+            onPress={login}
+          >
+            <Text style={styles.loginButtonText}>Увійти</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.loginLink}
+            activeOpacity={0.5}
+            onPress={() => changeScreen(1)}
+          >
+            <Text style={styles.loginLinkText}>
+              Немає акаунту? Зареєструватися
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     );
 };
 

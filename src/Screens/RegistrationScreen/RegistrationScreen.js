@@ -9,13 +9,13 @@ import {
   Platform,
 } from "react-native";
 import React, { useState } from "react";
-
-const buttonImg = require("./add.png");
+import { AntDesign } from "@expo/vector-icons"; 
 
 const RegistrationScreen = ({ changeScreen }) => {
     const [login, setLogin] = useState('');
     const [mail, setMail] = useState('');
-    const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('');
+  const [hidePassword, setHidePassword] = useState(true);
 
     const handleLogin = text => {
         setLogin(text)
@@ -37,10 +37,6 @@ const RegistrationScreen = ({ changeScreen }) => {
         console.log(`Login: ${login}, Email: ${mail}, Password: ${password}`);
     }
 
-    const showPassword = () => {
-        alert(`Your password is: ${password}`);
-    };
-
     return (
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
@@ -49,10 +45,7 @@ const RegistrationScreen = ({ changeScreen }) => {
         <View style={styles.container}>
           <View style={styles.photoContainer}>
             <TouchableOpacity style={styles.addButton} activeOpacity={0.5}>
-              <ImageBackground
-                source={buttonImg}
-                style={{ width: "100%", height: "100%" }}
-              ></ImageBackground>
+              <AntDesign name="pluscircleo" size={24} color="#FF6C00" />
             </TouchableOpacity>
           </View>
           <Text style={styles.title}>Реєстрація</Text>
@@ -73,16 +66,20 @@ const RegistrationScreen = ({ changeScreen }) => {
           <TextInput
             style={styles.inputPassword}
             placeholder="Пароль"
-            secureTextEntry={true}
+            secureTextEntry={hidePassword}
             value={password}
             onChangeText={handlePassword}
           />
           <TouchableOpacity
             style={styles.showPassword}
             activeOpacity={0.5}
-            onPress={showPassword}
+            onPress={() => {
+              setHidePassword(!hidePassword);
+            }}
           >
-            <Text style={styles.showPasswordText}>Показати</Text>
+            <Text style={styles.showPasswordText}>
+              {hidePassword ? "Показати" : "Приховати"}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.registerButton}
